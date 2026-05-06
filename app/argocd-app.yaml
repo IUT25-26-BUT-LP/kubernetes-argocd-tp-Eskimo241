@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/IUT25-26-BUT-LP/votre_repo'
+    repoURL: 'https://github.com/IUT25-26-BUT-LP/kubernetes-argocd-tp-Eskimo241'
     targetRevision: HEAD
     path: app
   destination:
