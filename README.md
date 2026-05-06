@@ -9,3 +9,5 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 wait for pending pods
 
 kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+kubectl apply -f app/argocd-app.yaml
