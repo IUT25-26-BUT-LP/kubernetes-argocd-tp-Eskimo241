@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-scan:
     # On indique à GitHub d'utiliser TON serveur, pas les siens.
-    runs-on: rt410p222
+    runs-on: self-hosted
     
     steps:
       - name: Checkout code
