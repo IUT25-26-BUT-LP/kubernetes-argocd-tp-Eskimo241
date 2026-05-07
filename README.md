@@ -25,3 +25,8 @@ kubectl apply -f kyverno-policy.yaml
 docker registry : 
 docker run -d -p 5000:5000 --restart=always --name local-registry 10.6.0.190:80/proxy/registry:2
 docker network connect kind local-registry
+
+
+
+
+https://github.com/IUT25-26-BUT-LP/kubernetes-argocd-tp-Eskimo241/actions/runs/25492472664/job/74803712671
