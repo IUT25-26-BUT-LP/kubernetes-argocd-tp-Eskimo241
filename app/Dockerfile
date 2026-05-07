@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM 10.6.0.190:80/proxy/python:3.9-slim
 
 WORKDIR /app
 
