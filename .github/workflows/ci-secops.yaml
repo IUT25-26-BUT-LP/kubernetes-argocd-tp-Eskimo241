@@ -7,6 +7,7 @@ on:
 
 jobs:
   build-and-scan:
+    # On indique à GitHub d'utiliser TON serveur, pas les siens.
     runs-on: self-hosted
     
     steps:
@@ -15,13 +16,13 @@ jobs:
 
       - name: Build an image from Dockerfile
         run: |
-          # On taggue avec 'latest' pour que ça matche avec le deployment.yaml
-          docker build -t localhost:5000/flask-app:latest .
+          # On build l'image et on la taggue pour ton registre local
+          docker build -t localhost:5000/flask-app:${{ github.sha }} ./app
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'localhost:5000/flask-app:latest'
+          image-ref: 'localhost:5000/flask-app:${{ github.sha }}'
           format: 'table'
           exit-code: '0' 
           ignore-unfixed: true
@@ -30,5 +31,5 @@ jobs:
 
       - name: Push image to Local Registry
         run: |
-          # L'image est maintenant poussée sur le registre
-          docker push localhost:5000/flask-app:latest
+          # On pousse l'image directement sur ton serveur
+          docker push localhost:5000/flask-app:${{ github.sha }}
