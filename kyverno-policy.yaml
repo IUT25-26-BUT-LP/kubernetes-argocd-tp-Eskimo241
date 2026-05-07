@@ -17,4 +17,4 @@ spec:
         pattern:
           spec:
             containers:
-              - image: "local-registry:5000/* | 10.6.0.190:80/*"
+              - image: "localhost:5000/* | 10.6.0.190:80/*"
