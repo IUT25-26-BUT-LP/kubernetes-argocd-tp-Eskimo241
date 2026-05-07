@@ -1,0 +1,20 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-image-registries
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+    - name: validate-registries
+      match:
+        any:
+        - resources:
+            kinds:
+              - Pod
+      validate:
+        message: "Déploiement refusé : L'image doit provenir d'un registre de confiance (ghcr.io ou 10.6.0.190)."
+        pattern:
+          spec:
+            containers:
+              - image: "local-registry:5000/* | 10.6.0.190:80/*"

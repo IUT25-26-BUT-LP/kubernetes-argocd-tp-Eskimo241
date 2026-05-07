@@ -1,0 +1,35 @@
+name: Build, Scan and Push (Local Registry)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-scan:
+    # On indique à GitHub d'utiliser TON serveur, pas les siens.
+    runs-on: self-hosted
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build an image from Dockerfile
+        run: |
+          # On build l'image et on la taggue pour ton registre local
+          docker build -t localhost:5000/flask-app:${{ github.sha }} .
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'localhost:5000/flask-app:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1' # Fait échouer si failles CRITICAL ou HIGH
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Push image to Local Registry
+        run: |
+          # On pousse l'image directement sur ton serveur
+          docker push localhost:5000/flask-app:${{ github.sha }}
